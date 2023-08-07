@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+.travlelog-btn {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	background-color: #2e79e8;
+	width: 13%;
+	height: 6%;
+	border-radius: 10px;
+}
+
+.travlelog-btn > a {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	color: white;
+	font-size: 1.5rem;
+}
+
+.login-wrapper{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+    width: 400px;
+    height: 350px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.login-wrapper > h2{
+    font-size: 24px;
+    color: #2e79e8;
+    margin-bottom: 20px;
+}
+
+#login-form > input{
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+
+#login-form > input::placeholder{
+    color: #D2D2D2;
+}
+
+#login-form > input[type="submit"]{
+    color: #fff;
+    font-size: 16px;
+    background-color: #2e79e8;
+    margin-top: 20px;
+}
+
+#login-form > input[type="checkbox"]{
+    display: none;
+}
+
+#login-form > label{
+    color: #999999;
+}
+
+#login-form input[type="checkbox"] + label{
+    cursor: pointer;
+    padding-left: 26px;
+    background-image: url("checkbox.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#login-form input[type="checkbox"]:checked + label{
+    background-image: url("checkbox-active.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.join-form-btn > a {
+	display: flex;
+	justify-content: center;
+	color: black;
+	text-decoration-line: underline;
+}
+
+.join-wrapper{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+    width: 500px;
+    height: 700px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.join-wrapper > h2{
+    font-size: 24px;
+    color: #2e79e8;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+#join-form > input{
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+
+#loginIdDupChkMsg {
+	position: absolute;
+	margin-top: -18px;
+	font-size: small;
+}
+
+.join-btn {
+	text-align: center;
+}
+
+.join-btn > button {
+	display: inline-block;
+	width: 100%;
+	font-size: 20px;
+	padding: 10px;
+	border-radius: 10px;
+	color: white;
+	background-color: #2e79e8;
+}

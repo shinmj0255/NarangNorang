@@ -1,0 +1,117 @@
+DROP DATABASE IF EXISTS NarangNorang;
+CREATE DATABASE NarangNorang;
+USE NarangNorang;
+
+#여행지 테이블
+CREATE TABLE travle(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '여행지 번호',
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    category VARCHAR(50) NOT NULL COMMENT '여행지 카테고리(축제/행사, 공연/전시, 맛집)',
+    title VARCHAR(300) NOT NULL,
+    summary TEXT NOT NULL COMMENT '여행지 요약정보',
+    `body` TEXT NOT NULL,
+    address VARCHAR(50) NOT NULL,
+    latitude DOUBLE(10,6) NOT NULL COMMENT '위도(y좌표)',
+    longitude DOUBLE(10,6) NOT NULL COMMENT '경도(x좌표)',
+    hit INT UNSIGNED NOT NULL DEFAULT 0
+);
+
+#여행일정 테이블
+CREATE TABLE travle_plan(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    startDate DATETIME NOT NULL COMMENT '여행시작일',
+    term INT NOT NULL COMMENT '여행기간',
+    title VARCHAR(100) NOT NULL,
+    theme INT UNSIGNED NOT NULL DEFAULT 1 COMMENT '여행테마(혼자 = 1, 친구 = 2, 연인 = 3, 가족 = 4)',
+    hit INT UNSIGNED NOT NULL DEFAULT 0
+);
+
+#상세일정 테이블
+CREATE TABLE detail_plan(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    memberId INT UNSIGNED NOT NULL,
+    `day` INT NOT NULL COMMENT '상세 여행지 코스 날짜',
+    content_no INT UNSIGNED NOT NULL COMMENT '해당 날짜 상세 여행지 순서'
+);
+
+#회원 테이블
+CREATE TABLE `member`(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    loginId VARCHAR(20) NOT NULL UNIQUE,
+    loginPw VARCHAR(100) NOT NULL,
+    `authLevel` TINYINT UNSIGNED NOT NULL DEFAULT 1 COMMENT '권한 레벨 (일반 = 1, 관리자 = 3)',
+    `name` VARCHAR(20) NOT NULL,
+    nickname VARCHAR(20) NOT NULL,
+    cellphoneNum VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부 (탈퇴 전 = 0, 탈퇴 후 = 1)',
+    delDate DATETIME COMMENT '탈퇴 날짜'
+);
+
+#가계부 테이블
+CREATE TABLE account_book(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    category VARCHAR(30) NOT NULL COMMENT '지출항목 (식비, 체험비, 숙박비, 교통비, ...)',
+    price INT UNSIGNED NOT NULL,
+    title VARCHAR(100) NOT NULL COMMENT '세부지출 제목',
+    `body` TEXT NOT NULL COMMENT '세부지출 내용'
+);
+
+#좋아요/싫어요 기능 테이블
+CREATE TABLE reactionPoint (
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    relTypeCode VARCHAR(20) NOT NULL COMMENT '관련 데이터 타입 코드',
+    relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호',
+    `point` INT NOT NULL DEFAULT 0
+);
+
+#댓글 테이블
+CREATE TABLE reply (
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    relTypeCode VARCHAR(20) NOT NULL COMMENT '관련 데이터 타입 코드',
+    relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호',
+    `body` TEXT NOT NULL
+);
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'admin',
+loginPw = SHA2('admin', 256),
+`name` = 'admin',
+nickname = 'admin',
+cellphoneNum = '01012123434',
+email = 'admin@gmail.com';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test',
+loginPw = SHA2('test', 256),
+`name` = 'test',
+nickname = 'test',
+cellphoneNum = '01011112222',
+email = 'test@gmail.com';
+
+SELECT * FROM travle;
+SELECT * FROM travle_plan;
+SELECT * FROM detail_plan;
+SELECT * FROM `member`;
+SELECT * FROM account_book;
+SELECT * FROM reactionPoint;
+SELECT * FROM reply;

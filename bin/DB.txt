@@ -1,0 +1,81 @@
+DROP DATABASE IF EXISTS NarangNorang;
+CREATE DATABASE NarangNorang;
+USE NarangNorang;
+
+CREATE TABLE planner(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    boardId INT UNSIGNED NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    cityName VARCHAR(30) NOT NULL,
+    startDate DATETIME NOT NULL,
+    endDate DATETIME NOT NULL,
+    `body` TEXT NOT NULL,
+    VCnt INT UNSIGNED NOT NULL DEFAULT 0
+);
+
+CREATE TABLE `member`(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    loginId VARCHAR(20) NOT NULL UNIQUE,
+    loginPw VARCHAR(100) NOT NULL,
+    `authLevel` TINYINT UNSIGNED NOT NULL DEFAULT 1 COMMENT '권한 레벨 (일반 = 1, 관리자 = 3)',
+    `name` VARCHAR(20) NOT NULL,
+    nickname VARCHAR(20) NOT NULL,
+    cellphoneNum VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부 (탈퇴 전 = 0, 탈퇴 후 = 1)',
+    delDate DATETIME COMMENT '탈퇴 날짜'
+);
+
+CREATE TABLE board(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `code` VARCHAR(20) NOT NULL UNIQUE COMMENT 'notice(공지사항), free(자유), ...',
+    `name` VARCHAR(20) NOT NULL UNIQUE COMMENT '게시판 이름',
+    delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제여부 (삭제 전 = 0, 삭제 후 = 1)',
+    delDate DATETIME COMMENT '삭제 날짜'
+);
+
+CREATE TABLE reactionPoint (
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    relTypeCode VARCHAR(20) NOT NULL COMMENT '관련 데이터 타입 코드',
+    relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호',
+    `point` INT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE reply (
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    relTypeCode VARCHAR(20) NOT NULL COMMENT '관련 데이터 타입 코드',
+    relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호',
+    `body` TEXT NOT NULL
+);
+
+CREATE TABLE `area`(
+    areaCode INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    areaName VARCHAR(30),
+    latitude DOUBLE(10,6) NOT NULL,
+    longitude DOUBLE(10,6) NOT NULL
+);
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test',
+loginPw = SHA2('test', 256),
+`name` = 'test',
+nickname = 'test',
+cellphoneNum = '01011112222',
+email = 'test@gmail.com';
+
+SELECT * FROM `member`;
