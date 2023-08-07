@@ -17,10 +17,10 @@ public class TravlePlan {
 	private String startDate;
 	private int term;
 	private String title;
+	private String body;
+	private int boardId;
 	private int theme;
 	private int hit;
-	private int boardId;
-	private String body;
 	private int VCnt;
 
 	private String writerName;

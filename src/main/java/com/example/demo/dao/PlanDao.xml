@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.PlanDao">
+
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
+
+	<select id="getForPrintPlan" resultType="TravlePlan">
+		SELECT TP.*
+			FROM travle_plan AS TP
+			INNER JOIN `member` AS M
+			ON TP.memberId = M.id
+			WHERE TP.id = #{id}
+			GROUP BY TP.id
+	</select>
+	
+	<select id="getTravlePlans" resultType="TravlePlan">
+		SELECT TP.*
+				,M.nickname AS `writerName`
+			FROM travle_plan AS TP
+			INNER JOIN `member` AS M
+			ON TP.memberId = M.id
+			WHERE TP.boardId = #{boardId}
+			GROUP BY TP.id
+			ORDER BY TP.id DESC
+	</select>
+	
+	<select id="getTravlePlanById" resultType="TravlePlan">
+		SELECT *
+			FROM travle_plan
+			WHERE id = #{id}
+	</select>
+
+</mapper>

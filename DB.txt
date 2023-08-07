@@ -27,6 +27,8 @@ CREATE TABLE travle_plan(
     startDate DATETIME NOT NULL COMMENT '여행시작일',
     term INT NOT NULL COMMENT '여행기간',
     title VARCHAR(100) NOT NULL,
+    `body` TEXT NOT NULL,
+    boardId INT UNSIGNED NOT NULL,
     theme INT UNSIGNED NOT NULL DEFAULT 1 COMMENT '여행테마(혼자 = 1, 친구 = 2, 연인 = 3, 가족 = 4)',
     hit INT UNSIGNED NOT NULL DEFAULT 0
 );
@@ -88,6 +90,18 @@ CREATE TABLE reply (
     `body` TEXT NOT NULL
 );
 
+# board(게시판) 테이블 생성
+CREATE TABLE board(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `code` VARCHAR(20) NOT NULL UNIQUE COMMENT 'notice(공지사항), free(자유), travlelog(여행기) ...',
+    `name` VARCHAR(20) NOT NULL UNIQUE COMMENT '게시판 이름',
+    delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제여부 (삭제 전 = 0, 삭제 후 = 1)',
+    delDate DATETIME COMMENT '삭제 날짜'
+);
+
+#관리자 회원 생성
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -98,6 +112,8 @@ nickname = 'admin',
 cellphoneNum = '01012123434',
 email = 'admin@gmail.com';
 
+
+#테스트 회원 생성
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -108,6 +124,25 @@ nickname = 'test',
 cellphoneNum = '01011112222',
 email = 'test@gmail.com';
 
+#게시판(여행기) 추가
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'travlelog',
+`name` = '여행기';
+
+#테스트 게시물 추가
+INSERT INTO travle_plan
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+startDate = "2023-08-01",
+term = 3,
+title = '부산여행',
+`body` = '즐거운 나홀로 부산여행',
+boardId = 1,
+theme = 1;
+
 SELECT * FROM travle;
 SELECT * FROM travle_plan;
 SELECT * FROM detail_plan;
@@ -115,3 +150,4 @@ SELECT * FROM `member`;
 SELECT * FROM account_book;
 SELECT * FROM reactionPoint;
 SELECT * FROM reply;
+SELECT * FROM board;
