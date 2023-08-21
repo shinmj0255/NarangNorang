@@ -19,7 +19,7 @@ CREATE TABLE travle(
 );
 
 #여행일정 테이블
-CREATE TABLE travle_plan(
+CREATE TABLE travlePlan(
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE travle_plan(
 );
 
 #상세일정 테이블
-CREATE TABLE detail_plan(
+CREATE TABLE detailPlan(
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     memberId INT UNSIGNED NOT NULL,
     `day` INT NOT NULL COMMENT '상세 여행지 코스 날짜',
@@ -124,6 +124,16 @@ nickname = 'test',
 cellphoneNum = '01011112222',
 email = 'test@gmail.com';
 
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test1',
+loginPw = SHA2('test1', 256),
+`name` = 'test1',
+nickname = 'test1',
+cellphoneNum = '01022223333',
+email = 'test1@gmail.com';
+
 #게시판(여행기) 추가
 INSERT INTO board
 SET regDate = NOW(),
@@ -132,7 +142,7 @@ updateDate = NOW(),
 `name` = '여행기';
 
 #테스트 게시물 추가
-INSERT INTO travle_plan
+INSERT INTO travlePlan
 SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 2,
@@ -143,9 +153,29 @@ title = '부산여행',
 boardId = 1,
 theme = 1;
 
+INSERT INTO travlePlan
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+startDate = "2023-08-06",
+term = 2,
+title = '대전여행',
+`body` = '대전 칼국수 투어',
+boardId = 1,
+theme = 2;
+
+# 2번 회원이 2번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'travlePlan',
+relId = 2,
+`body` = '다음 여행에 참고할게요~';
+
 SELECT * FROM travle;
-SELECT * FROM travle_plan;
-SELECT * FROM detail_plan;
+SELECT * FROM travlePlan;
+SELECT * FROM detailPlan;
 SELECT * FROM `member`;
 SELECT * FROM account_book;
 SELECT * FROM reactionPoint;

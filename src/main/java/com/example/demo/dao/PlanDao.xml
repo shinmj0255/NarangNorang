@@ -3,13 +3,22 @@
 
 <mapper namespace="com.example.demo.dao.PlanDao">
 
+	<insert id="makeTravlePlan">
+		INSERT INTO travlePlan
+			SET regDate = NOW(),
+				updateDate = NOW(),
+				memberId = #{memberId},
+				startDate = #{startDate},
+				city = #{city}
+	</insert>
+
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
 
 	<select id="getForPrintPlan" resultType="TravlePlan">
 		SELECT TP.*
-			FROM travle_plan AS TP
+			FROM travlePlan AS TP
 			INNER JOIN `member` AS M
 			ON TP.memberId = M.id
 			WHERE TP.id = #{id}
@@ -19,7 +28,7 @@
 	<select id="getTravlePlans" resultType="TravlePlan">
 		SELECT TP.*
 				,M.nickname AS `writerName`
-			FROM travle_plan AS TP
+			FROM travlePlan AS TP
 			INNER JOIN `member` AS M
 			ON TP.memberId = M.id
 			WHERE TP.boardId = #{boardId}
@@ -29,8 +38,36 @@
 	
 	<select id="getTravlePlanById" resultType="TravlePlan">
 		SELECT *
-			FROM travle_plan
+			FROM travlePlan
 			WHERE id = #{id}
 	</select>
+	
+	<select id="getPlansCnt" resultType="int">
+		SELECT COUNT(*)
+			FROM travlePlan
+			WHERE boardId = #{boardId}
+			<if test="searchKeyword != ''">
+				<choose>
+					<when test="searchKeywordType == 'title'">
+						AND title LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<when test="searchKeywordType == 'body'">
+						AND body LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<otherwise>
+						AND (
+							title LIKE CONCAT('%', #{searchKeyword}, '%')
+							OR body LIKE CONCAT('%', #{searchKeyword}, '%')
+						)
+					</otherwise>
+				</choose>
+			</if>
+	</select>
+	
+	<update id="increaseHit">
+		UPDATE travlePlan
+			SET hit = hit + 1
+			WHERE id = #{id}
+	</update>
 
 </mapper>

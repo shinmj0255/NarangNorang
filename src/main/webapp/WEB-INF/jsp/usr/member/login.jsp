@@ -10,9 +10,6 @@
 	<form method="post" action="doLogin" id="login-form">
 		<input type="text" name="loginId" placeholder="ID">
 		<input type="password" name="loginPw" placeholder="Password">
-		<label for="remember-check">
-			<input class="m-2" type="checkbox" id="remember-check">아이디 저장하기
-		</label>	
 		<input type="submit" value="Login">
 	</form>
 	<div class="form-btn">

@@ -15,13 +15,15 @@ public class TravlePlan {
 	private String updateDate;
 	private int memberId;
 	private String startDate;
+	private String endDate;
 	private int term;
+	private String city;
+	private String state;
 	private String title;
 	private String body;
 	private int boardId;
-	private int theme;
+	private String theme;
 	private int hit;
-	private int VCnt;
 
 	private String writerName;
 	private int goodReactionPoint;

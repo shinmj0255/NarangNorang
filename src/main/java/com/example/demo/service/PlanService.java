@@ -17,13 +17,20 @@ public class PlanService {
 	PlanService(PlanDao planDao) {
 		this.planDao = planDao;
 	}
-	
+
+	public void makeTravlePlan(int loginedMemberId, String startDate, int city) {
+		planDao.makeTravlePlan(loginedMemberId, startDate, city);
+	}
+
 	public TravlePlan getForPrintPlan(int id) {
 		return planDao.getForPrintPlan(id);
 	}
 
-	public List<TravlePlan> getTravlePlans() {
-		return planDao.getTravlePlans();
+	public List<TravlePlan> getTravlePlans(int boardId, String searchKeyword, String searchKeywordType, int itemsInAPage,int page) {
+		
+		int limitStart = (page - 1) * itemsInAPage;
+		
+		return planDao.getTravlePlans(boardId, searchKeyword, searchKeywordType, limitStart, itemsInAPage);
 	}
 
 	public TravlePlan getTravlePlanById(int id) {
@@ -33,5 +40,17 @@ public class PlanService {
 	public int getLastInsertId() {
 		return planDao.getLastInsertId();
 	}
+
+	public int getPlansCnt(int boardId, String searchKeyword, String searchKeywordType) {
+		return planDao.getPlansCnt(boardId, searchKeyword, searchKeywordType);
+	}
+
+	public void increaseHit(int id) {
+		planDao.increaseHit(id);
+	}
+
+
+		
+	
 
 }

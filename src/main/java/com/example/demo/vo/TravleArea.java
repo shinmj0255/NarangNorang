@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Travle {
+public class TravleArea {
 	private int id;
 	private String regDate;
 	private String updateDate;
