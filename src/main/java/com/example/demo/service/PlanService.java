@@ -18,8 +18,8 @@ public class PlanService {
 		this.planDao = planDao;
 	}
 
-	public void makeTravlePlan(int loginedMemberId, String startDate, int city) {
-		planDao.makeTravlePlan(loginedMemberId, startDate, city);
+	public void makeTravlePlan(int loginedMemberId, String startDate, String endDate, int city, String state) {
+		planDao.makeTravlePlan(loginedMemberId, startDate, endDate, city, state);
 	}
 
 	public TravlePlan getForPrintPlan(int id) {

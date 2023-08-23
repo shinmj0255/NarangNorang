@@ -33,17 +33,17 @@
 
 #goDate {
 	position: relative;
-	bottom: 390px;
+	bottom: 630px;
 	width: 50%;
 	float: left;
 	padding-top: 60px;
 	box-sizing: border-box;
 }
 
-#startDate {
+#startDate, #endDate {
 	position: relative;
 	left: 310px;
-	margin-top: 40px;
+	margin-top: 30px;
 	display: block;
 	width: 240px;
 	height: 40px;
@@ -51,7 +51,7 @@
 
 #spot {
 	position: relative;
-	bottom: 390px;
+	bottom: 630px;
 	margin: 0 auto;
 	width: 50%;
 	float: left;
@@ -257,9 +257,14 @@ select::-ms-expand {
 	background-color: #2e79e8;
 }
 
-#datepicker1,
-#datepicker2 {
-	text-align: center;
-	border: solid 1px #a3a3a3;
-	border-radius: 3px;
+.plan-table {
+	height: 780px;
+	width: 25%;
+	border: 1px solid black;
+}
+
+#map {
+	margin-bottom: 0;
+	margin-right: 0;
+	margin-left: auto;
 }

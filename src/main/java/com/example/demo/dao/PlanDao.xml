@@ -9,7 +9,9 @@
 				updateDate = NOW(),
 				memberId = #{memberId},
 				startDate = #{startDate},
+				endDate = #{endDate},
 				city = #{city}
+				state = #{state}
 	</insert>
 
 	<select id="getLastInsertId" resultType="int">

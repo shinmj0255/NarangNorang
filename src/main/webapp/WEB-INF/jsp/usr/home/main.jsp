@@ -5,6 +5,7 @@
 <c:set var="pageTitle" value="메인페이지" />
 <%@ include file="../common/head.jsp"%>
 
+
 <script>
 	function categoryChange(e) {
 		const state = document.getElementById("state");
@@ -103,13 +104,13 @@
 	}
 </script>
 
-<form action="../plan/write" method="post">
+<form action="../plan/plan" method="post">
 	<div id="travel">
 		<img style="width:100%; height: 834px;" src="/resource/images/제주00.jpeg" alt="사진">
 		<div id="goDate">
 			<div class="label">날짜선택</div>
-			<input type="date" id="startDate" onchange="dateFun()"
-				name="startDate">
+			<input type="date" id="startDate" onchange="dateFun()" name="startDate">
+			<input type="date" id="endDate" onchange="dateFun()" name="endDate">	
 		</div>
 		<div id="spot">
 			<div class="label">장소선택</div>
@@ -136,6 +137,11 @@
 						<option value="39">제주특별자치도</option>
 					</select>
 				</div>
+				 <div class="search_box" style="margin-top: 5px;">
+                    <select name="state" id="state">
+                        <option>군/구 선택</option>
+                    </select>
+                </div>
 			</div>
 		</div>
 	</div>

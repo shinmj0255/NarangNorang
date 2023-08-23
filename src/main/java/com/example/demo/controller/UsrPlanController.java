@@ -38,35 +38,22 @@ public class UsrPlanController {
 		this.rq = rq;
 	}
 	
-	@RequestMapping("/usr/plan/makePlan")
-	public String makePlan(Model model, String startDate, int city) {
-		
-		int id = planService.getLastInsertId();
-		
-		model.addAttribute("startDate", startDate);
-		model.addAttribute("city", city);
-		
-		planService.makeTravlePlan(rq.getLoginedMemberId(), startDate, city);
-		
-		return "usr/plan/wrtie";
+	@RequestMapping("/usr/plan/plan")
+	public String plan() {
+		return "usr/plan/plan"; 
 	}
 	
-	@RequestMapping("/usr/plan/write")
-	public String write() {
-		return "usr/plan/write";
-	}
-	
-	@RequestMapping("/usr/plan/doWrite")
+	@RequestMapping("/usr/plan/doPlan")
 	@ResponseBody
-	public String doWrite(String title) {
+	public String doWrite(int id, String title) {
+		
+		TravlePlan travlePlan = planService.getTravlePlanById(id);
 		
 		if (Util.empty(title)) {
 			return Util.jsHistoryBack("제목을 입력해주세요");
 		}
 		
-		int id = planService.getLastInsertId();
-		
-		return "";
+		return Util.jsReplace(Util.f("%d번 게시글이 생성되었습니다", id), Util.f("detail?id=%d", id));
 	}
 
 	@RequestMapping("/usr/plan/list")

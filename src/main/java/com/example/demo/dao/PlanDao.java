@@ -9,7 +9,7 @@ import com.example.demo.vo.TravlePlan;
 @Mapper
 public interface PlanDao {
 	
-	public Object makeTravlePlan(int loginedMemberId, String startDate, int city);
+	public Object makeTravlePlan(int loginedMemberId, String startDate, String endDate, int city, String state);
 
 	public TravlePlan getForPrintPlan(int id);
 
