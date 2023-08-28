@@ -40,20 +40,21 @@ public class UsrPlanController {
 	
 	@RequestMapping("/usr/plan/plan")
 	public String plan() {
-		return "usr/plan/plan"; 
+		return "usr/plan/plan";
 	}
 	
-	@RequestMapping("/usr/plan/doPlan")
+	@RequestMapping("/usr/plan/doplan")
 	@ResponseBody
-	public String doWrite(int id, String title) {
+	public String doPlan(Model model, String startDate, String endDate, int city, String state) {
 		
-		TravlePlan travlePlan = planService.getTravlePlanById(id);
+		planService.makeTravlePlan(rq.getLoginedMemberId(), startDate, endDate, city, state);
 		
-		if (Util.empty(title)) {
-			return Util.jsHistoryBack("제목을 입력해주세요");
-		}
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("city", city);
+		model.addAttribute("state", state);
 		
-		return Util.jsReplace(Util.f("%d번 게시글이 생성되었습니다", id), Util.f("detail?id=%d", id));
+		return "";
 	}
 
 	@RequestMapping("/usr/plan/list")

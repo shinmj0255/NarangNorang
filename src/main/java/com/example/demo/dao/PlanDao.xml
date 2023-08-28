@@ -10,7 +10,7 @@
 				memberId = #{memberId},
 				startDate = #{startDate},
 				endDate = #{endDate},
-				city = #{city}
+				city = #{city},
 				state = #{state}
 	</insert>
 

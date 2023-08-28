@@ -16,14 +16,9 @@ public class TravlePlan {
 	private int memberId;
 	private String startDate;
 	private String endDate;
-	private int term;
 	private String city;
 	private String state;
-	private String title;
-	private String body;
-	private int boardId;
-	private String theme;
-	private int hit;
+	
 
 	private String writerName;
 	private int goodReactionPoint;

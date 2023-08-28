@@ -31,6 +31,7 @@
 				<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/member/login">로그인</a></li>
 			</c:if>
 			<c:if test="${rq.getLoginedMemberId() != 0}">
+				<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/plan/plan">여행만들기</a></li>
 				<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/member/myPage">마이페이지</a></li>
 				<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/member/doLogout">로그아웃</a></li>
 			</c:if>

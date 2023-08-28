@@ -100,38 +100,6 @@ select::-ms-expand {
 	width: 100%;
 }
 
-#goBtn {
-	position: relative;
-	bottom: 185px;
-	display: block;
-	width: 200px;
-	font-size: 16px;
-	font-weight: 600;
-	color: #fff;
-	cursor: pointer;
-	height: 55px;
-	margin: 0 auto;
-	text-align: center;
-	border: none;
-	background-size: 300% 100%;
-	border-radius: 50px;
-}
-
-#goBtn:hover {
-	background-position: 100% 0;
-	-o-transition: all .4s ease-in-out;
-	-webkit-transition: all .4s ease-in-out;
-	transition: all .4s ease-in-out;
-}
-
-#goBtn:focus {
-	outline: none;
-}
-
-#goBtn {
-	background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
-	box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
-}
 
 .login-wrapper {
 	position: absolute;
@@ -258,8 +226,8 @@ select::-ms-expand {
 }
 
 .plan-table {
-	height: 780px;
-	width: 25%;
+	height: 800px;
+	width: 45%;
 	border: 1px solid black;
 }
 
