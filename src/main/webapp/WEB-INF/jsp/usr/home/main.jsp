@@ -10,5 +10,7 @@
 		src="/resource/images/제주00.jpeg" alt="사진">
 </div>
 
-
+<div class="go-btn" >
+	<a href="../plan/plan">여행계획하기</a>
+</div>
 <%@ include file="../common/foot.jsp"%>

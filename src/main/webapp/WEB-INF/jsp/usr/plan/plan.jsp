@@ -136,13 +136,13 @@
 		<div value="38">전라남도</div>
 		<div value="39">제주특별자치도</div>
 	</div>
-</div>
 
-<div id="map" style="width: 100%; height: 800px;"></div>
 
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=382c9ddf626c81fd0aa1266b1140ffee"></script>
-<script>
+	<div id="map" style="width: 100%; height: 800px;"></div>
+
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=382c9ddf626c81fd0aa1266b1140ffee"></script>
+	<script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	mapOption = {
 		center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -201,5 +201,5 @@
 		map.setCenter(locPosition);
 	}
 </script>
-
+</div>
 <%@ include file="../common/foot.jsp"%>

@@ -100,6 +100,23 @@ select::-ms-expand {
 	width: 100%;
 }
 
+.go-btn {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	background-color: #2e79e8;
+	width: 250px;
+	height: 50px;
+	font-size: 1.5rem;
+	border-radius: 10px;
+	color: white;
+	text-align: center;
+}
+
+.go-btn > a {
+	vertical-align: sub;
+}
 
 .login-wrapper {
 	position: absolute;
