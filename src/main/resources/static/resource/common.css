@@ -115,6 +115,8 @@ select::-ms-expand {
 }
 
 .go-btn > a {
+	display: block;
+	padding: 0.5rem;
 	vertical-align: sub;
 }
 
@@ -242,14 +244,26 @@ select::-ms-expand {
 	background-color: #2e79e8;
 }
 
-.plan-table {
-	height: 800px;
-	width: 45%;
+.title-box {
+	height: 70px;
+}
+
+.date-box {
+	width: 20%;
+	height: 830px;
 	border: 1px solid black;
+	background-color: lightgrey;
+}
+
+.place-list {
+	width: 30%;
+	height: 830px;
+	border: 1px solid black;
+	background-color: darkgrey;
 }
 
 #map {
-	margin-bottom: 0;
+	position: relative;
 	margin-right: 0;
 	margin-left: auto;
 }

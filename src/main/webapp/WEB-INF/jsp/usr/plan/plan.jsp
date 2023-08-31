@@ -10,6 +10,8 @@
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=382c9ddf626c81fd0aa1266b1140ffee"></script>
 
 <script>
 	function categoryChange(e) {
@@ -109,97 +111,44 @@
 	}
 </script>
 
-
-<div class="h-10 text-xl m-3" style="border: 1px solid black;">
-	<h1>지역선택 → 상세 일정 만들기</h1>
-</div>
-
-
-
+<div class="title-box">
+	<input type="text" name="title" placeholder="제목을 입력해주세요"/>
+	<select name="person" id="person">
+		<option value="">여행인원</option>
+		<option value="1인">1인</option>
+		<option value="친구">친구</option>
+		<option value="연인">연인</option>
+		<option value="가족">가족</option>
+	</select>
+	
+	<select name="" id=""></select></div>	
 <div class="flex">
-	<div class="plan-table" style="background-color: yellow;">
-		<div value="1">서울특별시</div>
-		<div value="2">인천광역시</div>
-		<div value="3">대전광역시</div>
-		<div value="4">대구광역시</div>
-		<div value="5">광주광역시</div>
-		<div value="6">부산광역시</div>
-		<div value="7">울산광역시</div>
-		<div value="8">세종특별자치시</div>
-		<div value="31">경기도</div>
-		<div value="32">강원도</div>
-		<div value="33">충청북도</div>
-		<div value="34">충청남도</div>
-		<div value="35">경상북도</div>
-		<div value="36">경상남도</div>
-		<div value="37">전라북도</div>
-		<div value="38">전라남도</div>
-		<div value="39">제주특별자치도</div>
+	<div class="date-box">
+		<div>시작일 : </div>
+		<input type="date" name="startDate" style="width: 100%;"/>
+		<div>종료일 : </div>
+		<input type="date" name="endDate" style="width: 100%;"/>
 	</div>
+	
+	<div class="place-list">
+		일정
+	</div>
+	
+	<div id="map" style="width: 100%; height: 830px;"></div>
 
-
-	<div id="map" style="width: 100%; height: 800px;"></div>
-
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=382c9ddf626c81fd0aa1266b1140ffee"></script>
 	<script>
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	mapOption = {
-		center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-		level : 10
-	// 지도의 확대 레벨 
-	};
+		// 마커를 담을 배열입니다
+		var markers = [];
 
-	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+			level : 3
+		// 지도의 확대 레벨
+		};
 
-	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
-	if (navigator.geolocation) {
-
-		// GeoLocation을 이용해서 접속 위치를 얻어옵니다
-		navigator.geolocation.getCurrentPosition(function(position) {
-
-			var lat = position.coords.latitude, // 위도
-			lon = position.coords.longitude; // 경도
-
-			var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-			message = '<div style="padding:5px;">현 위치</div>'; // 인포윈도우에 표시될 내용입니다
-
-			// 마커와 인포윈도우를 표시합니다
-			displayMarker(locPosition, message);
-
-		});
-
-	} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-
-		var locPosition = new kakao.maps.LatLng(33.450701, 126.570667), message = 'geolocation을 사용할수 없어요..'
-
-		displayMarker(locPosition, message);
-	}
-
-	// 지도에 마커와 인포윈도우를 표시하는 함수입니다
-	function displayMarker(locPosition, message) {
-
-		// 마커를 생성합니다
-		var marker = new kakao.maps.Marker({
-			map : map,
-			position : locPosition
-		});
-
-		var iwContent = message, // 인포윈도우에 표시할 내용
-		iwRemoveable = true;
-
-		// 인포윈도우를 생성합니다
-		var infowindow = new kakao.maps.InfoWindow({
-			content : iwContent,
-			removable : iwRemoveable
-		});
-
-		// 인포윈도우를 마커위에 표시합니다 
-		infowindow.open(map, marker);
-
-		// 지도 중심좌표를 접속위치로 변경합니다
-		map.setCenter(locPosition);
-	}
-</script>
+		// 지도를 생성합니다    
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+	</script>
 </div>
 <%@ include file="../common/foot.jsp"%>
