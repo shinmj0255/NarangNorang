@@ -111,29 +111,60 @@
 	}
 </script>
 
-<div class="title-box">
-	<input type="text" name="title" placeholder="제목을 입력해주세요"/>
-	<select name="person" id="person">
-		<option value="">여행인원</option>
-		<option value="1인">1인</option>
-		<option value="친구">친구</option>
-		<option value="연인">연인</option>
-		<option value="가족">가족</option>
-	</select>
-	
-	<select name="" id=""></select></div>	
 <div class="flex">
+	<span style="line-height: 50px; margin-left: 5px;">제목 : </span>
+	<input class="title-box" type="text" name="title" placeholder="제목을 입력해주세요" />
+	<div class="select-boxes">
+		<select name="person" id="person">
+			<option value="">여행인원</option>
+			<option value="1인">1인</option>
+			<option value="친구">친구</option>
+			<option value="연인">연인</option>
+			<option value="가족">가족</option>
+		</select> <select name="" id="" onchange="categoryChange(this)">
+			<option value="">시/도 선택</option>
+			<option value="1">서울특별시</option>
+			<option value="2">인천광역시</option>
+			<option value="3">대전광역시</option>
+			<option value="4">대구광역시</option>
+			<option value="5">광주광역시</option>
+			<option value="6">부산광역시</option>
+			<option value="7">울산광역시</option>
+			<option value="8">세종특별자치시</option>
+			<option value="31">경기도</option>
+			<option value="32">강원도</option>
+			<option value="33">충청북도</option>
+			<option value="34">충청남도</option>
+			<option value="35">전라북도</option>
+			<option value="36">전라남도</option>
+			<option value="37">경상북도</option>
+			<option value="38">경상남도</option>
+			<option value="39">제주도</option>
+		</select> <select name="" id="state">
+			<option>군/구 선택</option>
+		</select>
+	</div>
+</div>
+<div class="travle-box">
 	<div class="date-box">
-		<div>시작일 : </div>
-		<input type="date" name="startDate" style="width: 100%;"/>
-		<div>종료일 : </div>
-		<input type="date" name="endDate" style="width: 100%;"/>
+		<h1>여행날짜</h1>
+		<div class="date-box-items">
+			<div>시작일 :</div>
+			<input type="date" name="startDate" style="width: 100%;" />
+			<div style="margin-top: 3px;">종료일 :</div>
+			<input type="date" name="endDate" style="width: 100%;" />
+			<div class="btn-items">
+				<button class="add-btn">+</button>
+				<button class="sub-btn">-</button>
+			</div>
+			<button class="day-btn">DAY1</button>
+		</div>
 	</div>
-	
+
 	<div class="place-list">
-		일정
+		<h1>일정</h1>
 	</div>
-	
+
 	<div id="map" style="width: 100%; height: 830px;"></div>
 
 	<script>
