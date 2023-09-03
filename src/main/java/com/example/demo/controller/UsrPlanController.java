@@ -45,14 +45,9 @@ public class UsrPlanController {
 	
 	@RequestMapping("/usr/plan/doplan")
 	@ResponseBody
-	public String doPlan(Model model, String startDate, String endDate, int city, String state) {
+	public String doPlan(String title, String startDate, String endDate, int city, String state) {
 		
 		planService.makeTravlePlan(rq.getLoginedMemberId(), startDate, endDate, city, state);
-		
-		model.addAttribute("startDate", startDate);
-		model.addAttribute("endDate", endDate);
-		model.addAttribute("city", city);
-		model.addAttribute("state", state);
 		
 		return "";
 	}

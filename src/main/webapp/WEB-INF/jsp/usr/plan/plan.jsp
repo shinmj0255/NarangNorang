@@ -4,17 +4,18 @@
 
 <c:set var="pageTitle" value="여행계획하기" />
 <%@ include file="../common/head.jsp"%>
-<!-- services 라이브러리 불러오기 -->
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services"></script>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=382c9ddf626c81fd0aa1266b1140ffee"></script>
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=382c9ddf626c81fd0aa1266b1140ffee&libraries=services,clusterer,drawing"></script>
 
 <script>
-	function categoryChange(e) {
+	// 시군구를 선택하는 select 요소와 지도 객체를 가져옵니다.
+	const stateSelect = document.getElementById('state');
+
+	// 장소 검색 객체를 생성합니다.
+	const ps = new kakao.maps.services.Places();
+
+	function categoryChange(city) {
 		const state = document.getElementById("state");
 
 		const gangwon = [ "강릉시", "동해시", "삼척시", "속초시", "원주시", "춘천시", "태백시",
@@ -64,38 +65,41 @@
 				"옥천군", "음성군", "증평군", "진천군", "청원군" ];
 		const chungnam = [ "계룡시", "공주시", "금산군", "논산시", "당진시", "보령시", "부여군",
 				"서산시", "서천군", "아산시", "예산군", "천안시", "청양군", "태안군", "홍성군" ];
+		const sejong = ["세종전체"];
 
-		if (e.value == "32") {
+		if (city.value == "32") {
 			add = gangwon;
-		} else if (e.value == "31") {
+		} else if (city.value == "31") {
 			add = gyeonggi;
-		} else if (e.value == "36") {
+		} else if (city.value == "36") {
 			add = gyeongsangnam;
-		} else if (e.value == "35") {
+		} else if (city.value == "35") {
 			add = gyeongsangbuk;
-		} else if (e.value == "5") {
+		} else if (city.value == "5") {
 			add = gwangju;
-		} else if (e.value == "4") {
+		} else if (city.value == "4") {
 			add = daegu;
-		} else if (e.value == "3") {
+		} else if (city.value == "3") {
 			add = daejeon;
-		} else if (e.value == "6") {
+		} else if (city.value == "6") {
 			add = busan;
-		} else if (e.value == "1") {
+		} else if (city.value == "1") {
 			add = seoul;
-		} else if (e.value == "7") {
+		} else if (city.value == "7") {
 			add = ulsan;
-		} else if (e.value == "2") {
+		} else if (city.value == "8") {
+			add = sejong;
+		} else if (city.value == "2") {
 			add = incheon;
-		} else if (e.value == "38") {
+		} else if (city.value == "38") {
 			add = jeonnam;
-		} else if (e.value == "37") {
+		} else if (city.value == "37") {
 			add = jeonbuk;
-		} else if (e.value == "39") {
+		} else if (city.value == "39") {
 			add = jeju;
-		} else if (e.value == "34") {
+		} else if (city.value == "34") {
 			add = chungnam;
-		} else if (e.value == "33") {
+		} else if (city.value == "33") {
 			add = chungbuk;
 		}
 
@@ -109,77 +113,105 @@
 			state.appendChild(opt);
 		}
 	}
+	// 선택된 "군/구" 값에 따라 마커를 표시하는 함수
+	function displayMarkers(selectedState) {
+		// 이전 마커를 모두 제거합니다.
+		markers.forEach(function(marker) {
+			marker.setMap(null);
+		});
+		markers = [];
+
+		// 선택된 시군구에 해당하는 장소를 검색하고 위도와 경도를 가져옵니다.
+		ps.keywordSearch(selectedState, function(data, status, pagination) {
+			if (status === kakao.maps.services.Status.OK) {
+				// 검색 결과로 받은 장소 정보를 이용해 위도와 경도를 가져옵니다.
+				const lat = data[0].y; // 위도
+				const lng = data[0].x; // 경도
+
+				// 위도와 경도를 사용하여 마커를 생성하고 지도에 표시합니다.
+				const markerPosition = new kakao.maps.LatLng(lat, lng);
+				const marker = new kakao.maps.Marker({
+					position : markerPosition,
+					map : map,
+					title : selectedState, // 마커에 시군구 이름을 표시합니다.
+				});
+				markers.push(marker); // 마커를 배열에 추가
+
+				// 선택된 시군구로 지도의 중심을 이동합니다.
+				map.setCenter(markerPosition);
+			} else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+				console.log('검색 결과가 없습니다.');
+			} else if (status === kakao.maps.services.Status.ERROR) {
+				console.log('검색 중 오류가 발생했습니다.');
+			}
+		});
+	}
 </script>
 
-<div class="flex">
-	<span style="line-height: 50px; margin-left: 5px;">제목 : </span>
-	<input class="title-box" type="text" name="title" placeholder="제목을 입력해주세요" />
-	<div class="select-boxes">
-		<select name="person" id="person">
-			<option value="">여행인원</option>
-			<option value="1인">1인</option>
-			<option value="친구">친구</option>
-			<option value="연인">연인</option>
-			<option value="가족">가족</option>
-		</select> <select name="" id="" onchange="categoryChange(this)">
-			<option value="">시/도 선택</option>
-			<option value="1">서울특별시</option>
-			<option value="2">인천광역시</option>
-			<option value="3">대전광역시</option>
-			<option value="4">대구광역시</option>
-			<option value="5">광주광역시</option>
-			<option value="6">부산광역시</option>
-			<option value="7">울산광역시</option>
-			<option value="8">세종특별자치시</option>
-			<option value="31">경기도</option>
-			<option value="32">강원도</option>
-			<option value="33">충청북도</option>
-			<option value="34">충청남도</option>
-			<option value="35">전라북도</option>
-			<option value="36">전라남도</option>
-			<option value="37">경상북도</option>
-			<option value="38">경상남도</option>
-			<option value="39">제주도</option>
-		</select> <select name="" id="state">
-			<option>군/구 선택</option>
-		</select>
-	</div>
-</div>
-<div class="travle-box">
-	<div class="date-box">
-		<h1>여행날짜</h1>
-		<div class="date-box-items">
-			<div>시작일 :</div>
-			<input type="date" name="startDate" style="width: 100%;" />
-			<div style="margin-top: 3px;">종료일 :</div>
-			<input type="date" name="endDate" style="width: 100%;" />
-			<div class="btn-items">
-				<button class="add-btn">+</button>
-				<button class="sub-btn">-</button>
-			</div>
-			<button class="day-btn">DAY1</button>
+<form action="doPlan" method="post" onsubmit="submitForm(this); return false;">
+	<div class="flex">
+		<span style="line-height: 50px; margin-left: 5px;">제목 : </span> 
+		<input class="title-box" type="text" name="title" placeholder="제목을 입력해주세요" />
+		<div class="select-boxes">
+			<select id="city" onchange="categoryChange(this)">
+				<option value="">시/도 선택</option>
+				<option value="1">서울특별시</option>
+				<option value="2">인천광역시</option>
+				<option value="3">대전광역시</option>
+				<option value="4">대구광역시</option>
+				<option value="5">광주광역시</option>
+				<option value="6">부산광역시</option>
+				<option value="7">울산광역시</option>
+				<option value="8">세종특별자치시</option>
+				<option value="31">경기도</option>
+				<option value="32">강원도</option>
+				<option value="33">충청북도</option>
+				<option value="34">충청남도</option>
+				<option value="35">전라북도</option>
+				<option value="36">전라남도</option>
+				<option value="37">경상북도</option>
+				<option value="38">경상남도</option>
+				<option value="39">제주도</option>
+			</select> <select id="state">
+				<option value="">군/구 선택</option>
+			</select>
+		</div>
+
+		<div class="mt-2 mr-2 ml-auto">
+			<button class="btn btn-warning btn-sm">저장</button>
+			<button class="btn btn-outline btn-warning btn-sm"
+				onclick="history.back();">취소</button>
 		</div>
 	</div>
+	<div class="travle-box">
+		<div class="date-box">
+			<h1>여행날짜</h1>
+			<div class="date-box-items">
+				<div>시작일 :</div>
+				<input type="date" name="startDate" style="width: 100%;" />
+				<div style="margin-top: 3px;">종료일 :</div>
+				<input type="date" name="endDate" style="width: 100%;" />
+				<div class="btn-items">
+					<button class="add-btn">+</button>
+					<button class="sub-btn">-</button>
+				</div>
+				<button class="day-btn">DAY1</button>
+			</div>
+		</div>
 
-	<div class="place-list">
-		<h1>일정</h1>
+		<div class="place-list">
+			<h1>일정</h1>
+		</div>
+
+		<div id="map" style="width: 100%; height: 830px;"></div>
+		<script>
+			var mapContainer = document.getElementById('map'); // 지도를 표시할 HTML 요소
+			var mapOption = {
+				center : new kakao.maps.LatLng(37.566826, 126.9786567), // 초기 지도 중심 좌표 (서울)
+				level : 5, // 지도 확대 레벨 (1부터 14까지 가능)
+			};
+			var map = new kakao.maps.Map(mapContainer, mapOption);
+		</script>
 	</div>
-
-	<div id="map" style="width: 100%; height: 830px;"></div>
-
-	<script>
-		// 마커를 담을 배열입니다
-		var markers = [];
-
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		mapOption = {
-			center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-			level : 3
-		// 지도의 확대 레벨
-		};
-
-		// 지도를 생성합니다    
-		var map = new kakao.maps.Map(mapContainer, mapOption);
-	</script>
-</div>
+</form>
 <%@ include file="../common/foot.jsp"%>

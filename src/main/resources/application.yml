@@ -28,3 +28,6 @@ custom:
   siteMainUri: http://localhost:8081
   emailFrom: no-reply@localhost
   emailFromName: NarangNorang
+koreaTourApi:
+  baseUrl: https://api.visitkorea.or.kr/openapi/service/rest
+  apiKey: etI7sqqHopSpi3JZauJxFkgDNo3uV2a7YM6K%2FwVIiQUaoEwp38zVrbJrT01gkXxKobHJA8vBQnjdk6VWYGfmMw%3D%3D

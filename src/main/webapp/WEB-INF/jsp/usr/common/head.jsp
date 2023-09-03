@@ -21,10 +21,10 @@
 <title>${pageTitle }</title>
 </head>
 <body>
-	<div class="h-10 flex mx-auto text-2xl" style="background-color: grey;">
-		<a class="px-3 flex items-center" href="/">나랑노랑</a>
+	<div class="head-menu-bar">
+		<a class="px-3 ml-10 flex items-center" href="/">나랑노랑</a>
 		<div class="flex-grow"></div>
-		<ul class="flex">
+		<ul class="flex mr-10">
 			<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/">홈</a></li>
 			<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/plan/list?boardId=1">여행기</a></li>
 			<c:if test="${rq.getLoginedMemberId() == 0}">
