@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.PlanService;
 import com.example.demo.service.ReplyService;
-import com.example.demo.util.Util;
 import com.example.demo.vo.Board;
 import com.example.demo.vo.Reply;
 import com.example.demo.vo.Rq;
@@ -29,13 +28,15 @@ public class UsrPlanController {
 	private BoardService boardService;
 	private ReplyService replyService;
 	private Rq rq;
+	private UsrApiController usrApiController;
 	
 	@Autowired
-	public UsrPlanController(PlanService planService, BoardService boardService, ReplyService replyService, Rq rq) {
+	public UsrPlanController(PlanService planService, BoardService boardService, ReplyService replyService, Rq rq, UsrApiController usrApiController) {
 		this.planService = planService;
 		this.boardService = boardService;
 		this.replyService = replyService;
 		this.rq = rq;
+		this.usrApiController = usrApiController;
 	}
 	
 	@RequestMapping("/usr/plan/plan")

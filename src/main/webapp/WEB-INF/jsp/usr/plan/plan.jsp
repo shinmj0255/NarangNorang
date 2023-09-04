@@ -148,10 +148,11 @@
 	}
 </script>
 
-<form action="doPlan" method="post" onsubmit="submitForm(this); return false;">
+<form action="doPlan" method="post"
+	onsubmit="submitForm(this); return false;">
 	<div class="flex">
-		<span style="line-height: 50px; margin-left: 5px;">제목 : </span> 
-		<input class="title-box" type="text" name="title" placeholder="제목을 입력해주세요" />
+		<span style="line-height: 50px; margin-left: 5px;">제목 : </span> <input
+			class="title-box" type="text" name="title" placeholder="제목을 입력해주세요" />
 		<div class="select-boxes">
 			<select id="city" onchange="categoryChange(this)">
 				<option value="">시/도 선택</option>

@@ -1,52 +1,64 @@
 package com.example.demo.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.json.JSONObject;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class UsrApiController {
+	
+	 public List<Map<String, Object>> getData(int areaCode, String state, int contentTypeId, int numOfRows) throws URISyntaxException, JsonProcessingException {
 
-    @GetMapping("usr/api/areaInfo")
-    @ResponseBody
-    public String areaInfo() throws IOException {
-        String serviceKey = "etI7sqqHopSpi3JZauJxFkgDNo3uV2a7YM6K%2FwVIiQUaoEwp38zVrbJrT01gkXxKobHJA8vBQnjdk6VWYGfmMw%3D%3D";
-        String apiUrl = "https://apis.data.go.kr/B551011/KorService1";
+	        String link = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1";
+	        String MobileOS = "ETC";
+	        String MobileApp = "AppTest";
+	        String _type = "json";
+	        String serviceKey = "etI7sqqHopSpi3JZauJxFkgDNo3uV2a7YM6K%2FwVIiQUaoEwp38zVrbJrT01gkXxKobHJA8vBQnjdk6VWYGfmMw%3D%3D";
 
-        // API 요청 URL 구성
-        StringBuilder urlBuilder = new StringBuilder(apiUrl);
-        urlBuilder.append("?serviceKey=").append(serviceKey);
-        urlBuilder.append("&MobileOS=ETC");
-        urlBuilder.append("&MobileApp=AppTest");
-        urlBuilder.append("&_type=json");
+	        String url = link + "?" +
+	                "&MobileOS=" + MobileOS +
+	                "&MobileApp=" + MobileApp +
+	                "&_type=" + _type +
+	                "&areaCode=" + areaCode +
+	                "&contentTypeId=" + contentTypeId +
+	                "&numOfRows=" + numOfRows +
+	                "&serviceKey=" + serviceKey;
 
-        URL url = new URL(urlBuilder.toString());
+	        URI uri = new URI(url);
+	        RestTemplate restTemplate = new RestTemplate();
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        // API 호출 및 응답 데이터 읽기
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
+	        String response = restTemplate.getForObject(
+	                uri,
+	                String.class
+	        );
 
-        StringBuilder result = new StringBuilder();
+	        Map<String, Object> map = new ObjectMapper().readValue(response.toString(), Map.class);
+	        Map<String, Object> responseMap = (Map<String, Object>) map.get("response");
+	        Map<String, Object> bodyMap = (Map<String, Object>) responseMap.get("body");
+	        Map<String, Object> itemsMap = (Map<String, Object>) bodyMap.get("items");
+	        List<Map<String, Object>> itemMap = (List<Map<String, Object>>) itemsMap.get("item");
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-        } finally {
-            conn.disconnect();
-        }
+	        //state에 있는 정보만 들고오기
+	        List<Map<String, Object>> testItemMap = itemMap.stream()
+	                .filter(item -> {
+	                    Object value = item.get("addr1");
+	                    return value != null && value.toString().contains(state);
+	                })
+	                .collect(Collectors.toList());
 
-        // API 응답 데이터를 JSON 형식으로 반환
-        JSONObject jsonResponse = new JSONObject(result.toString());
 
-        return jsonResponse.toString();
-    }
+	        return testItemMap;
+	    }
+
 }
