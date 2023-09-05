@@ -103,16 +103,19 @@
 			add = chungbuk;
 		}
 
-		state.options.length = 1;
-		// 군/구 갯수;
+		 state.options.length = 1;
+		    for (property in add) {
+		        let opt = document.createElement("option");
+		        opt.value = add[property];
+		        opt.innerHTML = add[property];
+		        state.appendChild(opt);
+		    }
 
-		for (property in add) {
-			let opt = document.createElement("option");
-			opt.value = add[property];
-			opt.innerHTML = add[property];
-			state.appendChild(opt);
-		}
-	}
+		    // 시군구 선택 시 지도 위치 변경
+		    const selectedState = state.value;
+		    displayMarkers(selectedState);
+		    
+	
 	// 선택된 "군/구" 값에 따라 마커를 표시하는 함수
 	function displayMarkers(selectedState) {
 		// 이전 마커를 모두 제거합니다.

@@ -5,11 +5,16 @@
 <c:set var="pageTitle" value="메인페이지" />
 <%@ include file="../common/head.jsp"%>
 
+<script>
+	const url = 
+</script>
+
 <div class="main-bg">
 	<img src="/resource/images/제주00.jpeg" alt="사진">
 </div>
 <div id="main-contents" class="container mx-auto">
 	<h1>인기 여행지</h1>
+	<select name="" id="city">시/도 선택</select>
 	<div class="locate-list">
 		<div>1</div>
 		<div>2</div>
